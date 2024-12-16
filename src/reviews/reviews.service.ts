@@ -21,7 +21,7 @@ export class ReviewsService {
         useremail,
         review,
       });
-      return { message: 'order created successfully' };
+      return { message: 'review created successfully' };
     } catch (error) {
       throw new HttpException(
         'Error creating review',
