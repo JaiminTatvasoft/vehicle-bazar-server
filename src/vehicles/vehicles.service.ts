@@ -163,49 +163,6 @@ export class VehiclesService {
     }
   }
 
-  // async findByIdAndUpdateBooking(updateBookingDto: UpdateBookingDto) {
-  //   const { id, startDate, endDate } = updateBookingDto;
-  //   try {
-  //     //First find if bookings exist on this dates
-  //     const isBookingDateNotVacant = await this.vehicleModel.findOne(
-  //       { _id: new mongoose.Types.ObjectId(id) },
-  //       {
-  //         bookings: {
-  //           $elemMatch: {
-  //             $or: [
-  //               { startDate: { $lte: startDate }, endDate: { $gte: endDate } },
-  //             ],
-  //           },
-  //         },
-  //       },
-  //     );
-
-  //     if (isBookingDateNotVacant.bookings.length != 0) {
-  //       throw new Error('Booking overlaps with an existing booking.');
-  //     }
-
-  //     const updatedVehicleBooking = await this.vehicleModel.findByIdAndUpdate(
-  //       { _id: new mongoose.Types.ObjectId(id) },
-  //       {
-  //         $push: {
-  //           bookings: {
-  //             startDate,
-  //             endDate,
-  //           },
-  //         },
-  //       },
-  //       { new: true },
-  //     );
-
-  //     return updatedVehicleBooking;
-  //   } catch (error) {
-  //     throw new HttpException(
-  //       'Error fetching vehicles',
-  //       HttpStatus.INTERNAL_SERVER_ERROR,
-  //     );
-  //   }
-  // }
-
   create(createVehicleDto: CreateVehicleDto) {
     return 'This action adds a new vehicle';
   }

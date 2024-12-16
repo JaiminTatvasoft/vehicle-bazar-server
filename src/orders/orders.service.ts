@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Order } from './schema/order.schema';
 
 @Injectable()
@@ -61,7 +61,66 @@ export class OrdersService {
     }
   }
 
-  findAll() {
+  async findAll(id: string) {
+    try {
+      const aggregateOrders = await this.orderModel.aggregate([
+        {
+          $match: {
+            u_id: new mongoose.Types.ObjectId(id),
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'u_id',
+            foreignField: '_id',
+            as: 'users',
+          },
+        },
+        {
+          $unwind: '$users',
+        },
+        {
+          $project: {
+            'users.password': 0, // Exclude sensitive fields like 'password'
+            'users.createdAt': 0,
+            'users.updatedAt': 0,
+            'users.__v': 0,
+            'users.isVerified': 0,
+            'users.role': 0,
+            'users.contact': 0,
+          },
+        },
+        {
+          $lookup: {
+            from: 'vehicles',
+            localField: 'p_id',
+            foreignField: '_id',
+            as: 'vehicles',
+          },
+        },
+        {
+          $unwind: '$vehicles',
+        },
+        {
+          $project: {
+            'vehicles.__v': 0, // Exclude any unnecessary fields
+            'vehicles.updatedAt': 0,
+          },
+        },
+      ]);
+
+      // const orders = await this.orderModel.find({ u_id: id });
+      if (aggregateOrders.length == 0) {
+        return [];
+      }
+      return aggregateOrders;
+    } catch (error) {
+      throw new HttpException(
+        'Error checking order existence',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
     return `This action returns all orders`;
   }
 

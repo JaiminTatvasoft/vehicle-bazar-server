@@ -9,10 +9,13 @@ import {
   Query,
   HttpException,
   HttpStatus,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { AuthGaurd } from 'src/auth/auth.gaurd';
 
 @Controller('orders')
 export class OrdersController {
@@ -49,9 +52,15 @@ export class OrdersController {
     }
   }
 
+  @UseGuards(AuthGaurd)
   @Get()
-  findAll() {
-    return this.ordersService.findAll();
+  async findAll(@Req() req) {
+    try {
+      const orders = await this.ordersService.findAll(req.user.id);
+      return { success: true, orders };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':id')
