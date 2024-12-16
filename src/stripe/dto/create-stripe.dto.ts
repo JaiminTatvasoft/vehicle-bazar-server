@@ -1,7 +1,6 @@
 import {
   IsEmail,
   IsInt,
-  IsMobilePhone,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -17,17 +16,6 @@ class ShippingDetailDto {
   @IsString()
   @IsNotEmpty()
   address: string;
-
-  @IsString()
-  @IsNotEmpty()
-  city: string;
-
-  @IsString()
-  @IsNotEmpty()
-  state: string;
-
-  @IsMobilePhone()
-  contact: number;
 }
 
 class OrderItemDto {
@@ -52,6 +40,14 @@ class OrderItemDto {
   @IsString()
   @IsOptional()
   endDate: string;
+
+  @IsString()
+  @IsNotEmpty()
+  pickUpLocation: string;
+
+  @IsString()
+  @IsNotEmpty()
+  dropLocation: string;
 
   @IsInt()
   totalPrice: number;

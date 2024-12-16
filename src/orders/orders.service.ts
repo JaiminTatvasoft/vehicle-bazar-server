@@ -12,8 +12,17 @@ export class OrdersService {
     private orderModel: Model<Order>,
   ) {}
   async create(createOrderDto: CreateOrderDto) {
-    const { u_id, p_id, prodName, noOfDays, startDate, endDate, totalAmount } =
-      createOrderDto;
+    const {
+      u_id,
+      p_id,
+      prodName,
+      noOfDays,
+      startDate,
+      endDate,
+      pickUpLocation,
+      dropLocation,
+      totalAmount,
+    } = createOrderDto;
 
     try {
       await this.orderModel.create({
@@ -23,6 +32,8 @@ export class OrdersService {
         noOfDays,
         startDate,
         endDate,
+        pickUpLocation,
+        dropLocation,
         totalAmount,
       });
       return { message: 'order created successfully' };

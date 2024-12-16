@@ -23,6 +23,12 @@ export class Order {
   @Prop({ required: true, type: String })
   endDate: string;
 
+  @Prop({ required: true, type: String })
+  pickUpLocation: string;
+
+  @Prop({ required: true, type: String })
+  dropLocation: string;
+
   @Prop({ required: true, type: Number })
   totalAmount: number;
 }

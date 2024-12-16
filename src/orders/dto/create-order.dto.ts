@@ -24,6 +24,14 @@ export class CreateOrderDto {
   @IsNotEmpty()
   endDate: string;
 
+  @IsString()
+  @IsNotEmpty()
+  pickUpLocation: string;
+
+  @IsString()
+  @IsNotEmpty()
+  dropLocation: string;
+
   @IsNumber()
   @IsNotEmpty()
   totalAmount: number;

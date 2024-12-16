@@ -48,6 +48,8 @@ export class StripeService {
                 noOfDays: createStripeDto.orderItems.noOfDays,
                 startDate: createStripeDto.orderItems.startDate,
                 endDate: createStripeDto.orderItems.endDate,
+                pickUpLocation: createStripeDto.orderItems.pickUpLocation,
+                dropLocation: createStripeDto.orderItems.dropLocation,
               },
             },
             unit_amount: createStripeDto.orderItems.totalPrice,
@@ -80,6 +82,8 @@ export class StripeService {
             noOfDays: product.metadata.noOfDays,
             startDate: product.metadata.startDate,
             endDate: product.metadata.endDate,
+            pickUpLocation: product.metadata.pickUpLocation,
+            dropLocation: product.metadata.dropLocation,
             totalAmount,
           };
 
