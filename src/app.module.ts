@@ -9,6 +9,7 @@ import { StripeModule } from './stripe/stripe.module';
 import { ComparisiontableModule } from './comparisiontable/comparisiontable.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrdersModule } from './orders/orders.module';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { OrdersModule } from './orders/orders.module';
     ComparisiontableModule,
     MongooseModule.forRoot('mongodb://localhost:27017/vehiclebazar'),
     OrdersModule,
+    LocationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
