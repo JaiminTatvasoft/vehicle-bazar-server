@@ -121,7 +121,6 @@ export class OrdersService {
         },
       ]);
 
-      // const orders = await this.orderModel.find({ u_id: id });
       if (aggregateOrders.length == 0) {
         return [];
       }
@@ -132,7 +131,6 @@ export class OrdersService {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-    return `This action returns all orders`;
   }
 
   findOne(id: number) {
