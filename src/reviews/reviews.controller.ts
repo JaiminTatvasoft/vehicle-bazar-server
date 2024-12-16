@@ -18,7 +18,7 @@ import { AuthGaurd } from 'src/auth/auth.gaurd';
 
 @Controller('reviews')
 export class ReviewsController {
-  constructor(private readonly reviewsService: ReviewsService) {}
+  constructor(private readonly reviewsService: ReviewsService) { }
 
   @UseGuards(AuthGaurd)
   @Post()
@@ -41,7 +41,7 @@ export class ReviewsController {
       if (!reviews.length) {
         return [];
       }
-      return reviews;
+      return { reviews, success: true };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

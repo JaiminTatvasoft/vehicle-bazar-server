@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Review } from './schema/review.schema';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class ReviewsService {
   constructor(
     @InjectModel('reviews')
     private reviewModel: Model<Review>,
-  ) {}
+  ) { }
   async create(createReviewDto: CreateReviewDto, userId: string) {
     const { p_id, username, useremail, review } = createReviewDto;
     try {
@@ -32,7 +32,7 @@ export class ReviewsService {
 
   async orderProductReview(p_id: string, u_id: string) {
     try {
-      const reviews = await this.reviewModel.find({ u_id, p_id });
+      const reviews = await this.reviewModel.find({ u_id: new mongoose.Types.ObjectId(u_id), p_id: new mongoose.Types.ObjectId(p_id) });
       return reviews;
     } catch (error) {
       throw new HttpException(
@@ -44,7 +44,7 @@ export class ReviewsService {
 
   async reviewByProductId(id: string) {
     try {
-      const reviews = await this.reviewModel.find({ p_id: id });
+      const reviews = await this.reviewModel.find({ p_id: new mongoose.Types.ObjectId(id) });
       return reviews;
     } catch (error) {
       throw new HttpException(
