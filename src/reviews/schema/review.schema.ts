@@ -19,6 +19,9 @@ export class Review {
 
   @Prop({ required: true, type: String })
   review: string;
+
+  @Prop({ required: true, type: Number, min: 1, max: 5 })
+  rating: number;
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);

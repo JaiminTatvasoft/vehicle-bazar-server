@@ -10,9 +10,9 @@ export class ReviewsService {
   constructor(
     @InjectModel('reviews')
     private reviewModel: Model<Review>,
-  ) { }
+  ) {}
   async create(createReviewDto: CreateReviewDto, userId: string) {
-    const { p_id, username, useremail, review } = createReviewDto;
+    const { p_id, username, useremail, review, rating } = createReviewDto;
     try {
       await this.reviewModel.create({
         u_id: userId,
@@ -20,6 +20,7 @@ export class ReviewsService {
         username,
         useremail,
         review,
+        rating,
       });
       return { message: 'review created successfully' };
     } catch (error) {
@@ -32,7 +33,10 @@ export class ReviewsService {
 
   async orderProductReview(p_id: string, u_id: string) {
     try {
-      const reviews = await this.reviewModel.find({ u_id: new mongoose.Types.ObjectId(u_id), p_id: new mongoose.Types.ObjectId(p_id) });
+      const reviews = await this.reviewModel.find({
+        u_id: new mongoose.Types.ObjectId(u_id),
+        p_id: new mongoose.Types.ObjectId(p_id),
+      });
       return reviews;
     } catch (error) {
       throw new HttpException(
@@ -44,7 +48,9 @@ export class ReviewsService {
 
   async reviewByProductId(id: string) {
     try {
-      const reviews = await this.reviewModel.find({ p_id: new mongoose.Types.ObjectId(id) });
+      const reviews = await this.reviewModel.find({
+        p_id: new mongoose.Types.ObjectId(id),
+      });
       return reviews;
     } catch (error) {
       throw new HttpException(
